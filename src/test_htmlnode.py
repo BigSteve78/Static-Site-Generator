@@ -16,7 +16,6 @@ class TestHTMLNode(unittest.TestCase):
         expected_string = "HTMLNode(<p>, Sample Text Here, None, None)"
         self.assertEqual(repr(node), expected_string)
 
-class TestHTMLNode(unittest.TestCase):
     def test_to_html(self):
         node = LeafNode(tag = "p", value = "Sample Text")
         expected_string = "<p>Sample Text</p>"
@@ -32,7 +31,7 @@ class TestHTMLNode(unittest.TestCase):
         expected_string = '<a href="https://www.google.com">Please Click Me!!!</a>'
         self.assertEqual(node.to_html(), expected_string)
 
-class TestParentNode(unittest.TestCase):
+
     def test_to_html_display(self):
         LeafNode1 = LeafNode(value = "This is some sample text ")
         LeafNode2 = LeafNode(value = "Bold Text ", tag = "b")
@@ -67,6 +66,5 @@ class TestParentNode(unittest.TestCase):
 
 
             
-
 if __name__ == "__main__":
     unittest.main()
