@@ -1,6 +1,14 @@
 import unittest
 
-from textnode import TextNode
+from textnode import (
+    TextNode,
+    text_type_text,
+    text_type_bold,
+    text_type_code,
+    text_type_image,
+    text_type_italic,
+    text_type_link
+)
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
@@ -15,7 +23,7 @@ class TestTextNode(unittest.TestCase):
 
     def test_repr(self):
         node = TextNode("Sample Text", "bold")
-        actual_string = ("TextNode(Sample Text, bold, None)")
+        actual_string = ('TextNode("Sample Text", bold, None)')
         self.assertEqual(repr(node), actual_string)
         #(f"TextNode({self.text}, {self.text_type}, {self.url})")
 
