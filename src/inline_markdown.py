@@ -1,10 +1,12 @@
-import textnode
+import textnode, re
 from textnode import (
     TextNode,
     text_type_text,
     text_type_bold,
     text_type_code,
-    text_type_italic
+    text_type_italic,
+    text_type_image,
+    text_type_link
 )
 
 
@@ -15,7 +17,6 @@ def split_nodes_delimeter(old_nodes, delimeter, text_type):
             new_nodes.append(node)
             continue
         str = node.text
-        #split_nodes = []
         sections = str.split(sep=delimeter, maxsplit = -1)
         if len(sections) % 2 == 0:
             raise ValueError("Invalid Syntax, formatted section was not closed")
@@ -27,12 +28,14 @@ def split_nodes_delimeter(old_nodes, delimeter, text_type):
             else:
                 new_nodes.append(TextNode(text = sections[i], text_type=text_type))
     return new_nodes    
-    
-            
 
-node = TextNode("This is some **bold** text.", text_type_text)
-node2 = TextNode("More **BOLD** text!!!", text_type_text)
+def extract_markdown_images(text):
+    list = re.findall(r"!\[(.*?)\]\((.*?)\)", text)
+    return list
 
-new_nodes = split_nodes_delimeter([node, node2], "**", text_type_bold)
+def extract_markdown_links(text):
+    list = re.findall(r"\[(.*?)\]\((.*?)\)", text)
+    return list
 
-#print(new_nodes)
+def split_nodes_image(old_nodes):
+    pass

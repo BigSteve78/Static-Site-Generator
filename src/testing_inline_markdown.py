@@ -1,5 +1,5 @@
-import unittest, textnode, split_nodes
-from split_nodes import split_nodes_delimeter
+import unittest, textnode, inline_markdown
+from inline_markdown import *
 from textnode import(
     TextNode,
     text_type_text,
@@ -70,7 +70,24 @@ class TestSplitNodes(unittest.TestCase):
     def test_multiple_types(self):
         node = TextNode("**Bold** and *italic*", text_type_text)
         new_nodes = split_nodes_delimeter([node], "**",  text_type_bold)
-        print(new_nodes)
         new_nodes = split_nodes_delimeter(new_nodes, "*", text_type_italic)
-        print(new_nodes)
         self.assertEqual(new_nodes, self.test_answers[4])
+
+class Test_Extraction(unittest.TestCase):
+    test_answers = [
+        [("rick roll", "https://i.imgur.com/aKaOqIh.gif")],
+        [("funky monkey", "https://funkymonkey.png"), ("alt text", "https://someimageidk.jpeg")],
+        [("link", ("https://website"))]
+    ]
+
+    def test_image_extraction(self):
+        text = "This has a link ![rick roll](https://i.imgur.com/aKaOqIh.gif)"
+        self.assertEqual(extract_markdown_images(text), self.test_answers[0])
+
+    def test_multiple_images(self):
+        text = "Image: ![funky monkey](https://funkymonkey.png) Image 2: ![alt text](https://someimageidk.jpeg)"
+        self.assertEqual(extract_markdown_images(text), self.test_answers[1])
+
+    def test_link_extraction(self):
+        text = "Here is a [link](https://website)"
+        self.assertEqual(extract_markdown_links(text), self.test_answers[2])
